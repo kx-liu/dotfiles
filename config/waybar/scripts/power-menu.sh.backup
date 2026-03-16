@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+notify() {
+  command -v notify-send >/dev/null 2>&1 || return 0
+  notify-send "Waybar Power" "$1"
+}
+
+menu() {
+  choices="$(cat <<'EOF'
+  Lock
+  Logout
+  Reboot
+  Shutdown
+EOF
+)"
+
+  # Approximate placement under the top-right power button.
+  # Tune these two values if you change bar height/margins.
+  xoffset="-12"
+  yoffset="42"
+
+  if command -v wofi >/dev/null 2>&1; then
+    printf "%s\n" "$choices" | wofi \
+      --dmenu \
+      --prompt "Power" \
+      --lines 4 \
+      --width 220 \
+      --hide-scroll \
+      --location top_right \
+      --xoffset "$xoffset" \
+      --yoffset "$yoffset"
+  elif command -v fuzzel >/dev/null 2>&1; then
+    printf "%s\n" "$choices" | fuzzel --dmenu --prompt "Power> "
+  else
+    if command -v rofi >/dev/null 2>&1; then
+      printf "%s\n" "$choices" | rofi -dmenu -i -p "Power" -lines 4
+    else
+      notify "No menu app found (install wofi, fuzzel, or rofi)"
+      return 1
+    fi
+  fi
+}
+
+choice="$(menu || true)"
+case "$choice" in
+  "  Lock"|"Lock"|lock) loginctl lock-session ;;
+  "  Logout"|"Logout"|logout) command -v hyprctl >/dev/null 2>&1 && hyprctl dispatch exit ;;
+  "  Reboot"|"Reboot"|reboot) systemctl reboot ;;
+  "  Shutdown"|"Shutdown"|shutdown) systemctl poweroff ;;
+  *) exit 0 ;;
+esac

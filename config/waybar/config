@@ -1,0 +1,10 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 38,
+  "include": ["~/.config/waybar/modules.json"],
+
+  "modules-left": ["custom/launcher", "hyprland/workspaces", "hyprland/submap", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["group/connectivity", "group/cpu", "group/gpu", "memory", "group/system"]
+}

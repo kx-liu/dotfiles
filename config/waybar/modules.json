@@ -1,0 +1,178 @@
+{
+  "custom/launcher": {
+    "format": "APP",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/launcher.sh"
+  },
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "format": "{name}",
+    "all-outputs": false,
+    "active-only": false,
+    "move-to-monitor": true,
+    "sort-by": "name"
+  },
+
+  "hyprland/submap": {
+    "format": "󰩨 {}",
+    "tooltip": false,
+    "always-on": false,
+    "default-submap": ""
+  },
+
+  "hyprland/window": {
+    "format": "{}",
+    "separate-outputs": true,
+    "max-length": 80
+  },
+
+  "clock": {
+    "interval": 1,
+    "format": "{:%a %Y-%m-%d %H:%M}",
+    "format-alt": "{:%Y-%m-%d %H:%M:%S}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#c6a0f6'><b>{}</b></span>",
+        "days": "<span color='#8aadf4'><b>{}</b></span>",
+        "weeks": "<span color='#a6da95'><b>W{}</b></span>",
+        "weekdays": "<span color='#eed49f'><b>{}</b></span>",
+        "today": "<span background='#91d7e3' color='#24273a'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "🔇 muted",
+    "format-icons": ["🔈", "🔉", "🔊"],
+    "scroll-step": 5,
+    "on-click": "~/.config/waybar/scripts/audio-click.sh toggle",
+    "on-click-right": "~/.config/waybar/scripts/audio-click.sh settings",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+  },
+
+  "bluetooth": {
+    "format": "",
+    "format-connected": "",
+    "format-off": "",
+    "format-disabled": "",
+    "tooltip-format": "{controller_alias}\n{num_connections} connected",
+    "on-click": "~/.config/waybar/scripts/bluetooth-toggle.sh toggle",
+    "on-click-right": "~/.config/waybar/scripts/bluetooth-toggle.sh manage"
+  },
+
+  "network": {
+    "format": "NET off",
+    "format-wifi": "WIFI {essid}",
+    "format-ethernet": "LAN",
+    "format-disconnected": "NET down",
+    "tooltip-format": "{ifname} via {gwaddr}",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "{ifname} ({ipaddr}/{cidr})",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click-right": "~/.config/waybar/scripts/network-manage.sh"
+  },
+
+  "custom/cpu-temp": {
+    "exec": "~/.config/waybar/scripts/temp-status.sh cpu",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true
+  },
+
+  "custom/gpu": {
+    "exec": "~/.config/waybar/scripts/gpu-status.sh",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true
+  },
+
+  "custom/gpu-temp": {
+    "exec": "~/.config/waybar/scripts/temp-status.sh gpu",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true
+  },
+
+  "custom/idle-mode": {
+    "exec": "~/.config/waybar/scripts/idle-mode.sh status",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true,
+    "on-click": "~/.config/waybar/scripts/idle-mode.sh toggle",
+    "on-click-middle": "~/.config/waybar/scripts/idle-awake.sh",
+    "on-click-right": "~/.config/waybar/scripts/idle-sleep.sh"
+  },
+
+  "custom/cpu": {
+    "exec": "~/.config/waybar/scripts/cpu-status.sh",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true
+  },
+
+  "memory": { "format": "RAM {percentage}%", "interval": 1 },
+
+  "custom/input-source": {
+    "exec": "~/.config/waybar/scripts/ime.sh",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true
+  },
+
+  "custom/theme-toggle": {
+    "exec": "~/.config/waybar/scripts/theme-toggle.sh status",
+    "return-type": "json",
+    "interval": 2,
+    "format": "{text}",
+    "tooltip": true,
+    "on-click": "~/.config/waybar/scripts/theme-toggle.sh toggle"
+  },
+
+  "custom/power": {
+    "format": "⏻",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/power-menu.sh"
+  },
+
+  "group/connectivity": {
+    "orientation": "inherit",
+    "modules": ["custom/input-source", "pulseaudio", "bluetooth", "network"]
+  },
+
+  "group/cpu": {
+    "orientation": "inherit",
+    "modules": ["custom/cpu", "custom/cpu-temp"]
+  },
+
+  "group/gpu": {
+    "orientation": "inherit",
+    "modules": ["custom/gpu", "custom/gpu-temp"]
+  },
+
+  "group/system": {
+    "orientation": "inherit",
+    "modules": ["custom/idle-mode", "custom/theme-toggle", "custom/power"]
+  }
+}

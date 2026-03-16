@@ -1,0 +1,221 @@
+@import "colors.css";
+@import "waybar-theme.css";
+
+* {
+  border: 0;
+  font-family: "JetBrains Mono", "Font Awesome 6 Free", "Noto Sans CJK SC", "Noto Sans CJK TC", "Noto Sans CJK JP", "Noto Sans", "Noto Color Emoji", sans-serif;
+  font-size: 12.5px;
+}
+
+window#waybar {
+  background: @bar_bg;
+  border-bottom: 1px solid @bar_border;
+  color: @text;
+}
+
+tooltip {
+  background: @base;
+  color: @text;
+  border: 1px solid rgba(202, 211, 245, 0.12);
+  border-radius: 10px;
+}
+
+tooltip * {
+  color: @text;
+  text-shadow: none;
+}
+
+tooltip label {
+  font-family: "Noto Sans CJK SC", "Noto Sans CJK TC", "Noto Sans CJK JP", "Noto Sans", "Noto Color Emoji", sans-serif;
+  padding: 2px 4px;
+}
+
+#workspaces {
+  background: @base;
+  border-radius: 10px;
+  margin: 4px 0 4px 6px;
+  padding: 0 8px;
+}
+
+#workspaces button {
+  padding: 0 6px;
+  margin: 2px 2px;
+  border-radius: 999px;
+  background: transparent;
+  color: @text;
+  opacity: 0.85;
+}
+
+#workspaces button:hover {
+  box-shadow: none;
+  text-shadow: none;
+  background: rgba(198, 160, 246, 0.10);
+  color: @mauve;
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+  background: rgba(198, 160, 246, 0.16);
+  color: @mauve;
+  opacity: 1;
+}
+
+#submap,
+#hyprland-submap,
+#custom-launcher,
+#window,
+#clock,
+#pulseaudio,
+#bluetooth,
+#network,
+#custom-cpu-temp,
+#custom-gpu,
+#custom-gpu-temp,
+#custom-idle-mode,
+#custom-cpu,
+#memory,
+#custom-input-source,
+#custom-theme-toggle {
+  padding: 3px 8px;
+  margin: 4px 0;
+  border-radius: 10px;
+  background: @base;
+}
+
+#window {
+  margin: 4px 5px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: @mauve;
+  color: @base;
+  font-family: "Noto Sans CJK SC", "Noto Sans CJK TC", "Noto Sans CJK JP", "Noto Sans", "Noto Color Emoji", sans-serif;
+}
+
+window#waybar.empty #window {
+  background: transparent;
+}
+
+#submap,
+#hyprland-submap {
+  color: @mauve;
+  margin-left: 5px;
+}
+
+#custom-launcher {
+  color: @mauve;
+  background: rgba(36, 39, 58, 0.95);
+  margin: 4px 4px 4px 6px;
+  padding: 3px 9px;
+  border-radius: 10px;
+}
+
+#clock {
+  color: @sky;
+  margin: 4px 8px;
+}
+
+#pulseaudio {
+  color: @flamingo;
+}
+
+#pulseaudio.muted {
+  color: @overlay0;
+}
+
+#bluetooth {
+  color: @blue;
+}
+
+#network {
+  color: @green;
+}
+
+#network.disconnected,
+#network.disabled {
+  color: @red;
+}
+
+#custom-cpu-temp,
+#custom-gpu-temp {
+  color: @teal;
+}
+
+#custom-cpu-temp.critical,
+#custom-gpu-temp.critical {
+  color: @red;
+}
+
+#custom-gpu {
+  color: @sapphire;
+}
+
+#custom-idle-mode {
+  color: @base;
+  background: @yellow;
+}
+
+#custom-idle-mode.mode-awake {
+  color: @base;
+  background: @yellow;
+}
+
+#custom-idle-mode.mode-sleep {
+  color: @yellow;
+  background: @base;
+}
+
+#custom-input-source {
+  color: @peach;
+}
+
+#custom-theme-toggle {
+  color: @mauve;
+}
+
+#custom-theme-toggle.theme-solid {
+  color: @sky;
+}
+
+#custom-theme-toggle.theme-transparent {
+  color: @mauve;
+}
+
+#custom-input-source.ime-zh {
+  color: @green;
+  background: rgba(166, 218, 149, 0.12);
+}
+
+#custom-input-source.ime-en {
+  color: @peach;
+}
+
+#custom-input-source.ime-off {
+  color: @red;
+  background: rgba(237, 135, 150, 0.14);
+}
+
+#custom-cpu,
+#custom-gpu,
+#memory {
+  color: @sky;
+}
+
+#group-connectivity {
+  margin-left: 6px;
+}
+
+/* Emphasize group boundaries by spacing the first module of each group. */
+#custom-cpu,
+#custom-gpu,
+#memory,
+#custom-idle-mode {
+  margin-left: 18px;
+}
+
+#custom-power {
+  color: @base;
+  background: @red;
+  border-radius: 10px;
+  margin: 4px 12px 4px 0;
+  padding: 3px 10px;
+}
