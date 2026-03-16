@@ -2,6 +2,7 @@
 set -euo pipefail
 
 action="${1:-status}"
+refresh_signal="8"
 
 notify() {
   command -v notify-send >/dev/null 2>&1 || return 0
@@ -11,11 +12,19 @@ notify() {
 launch_spotify() {
   if command -v spotify >/dev/null 2>&1; then
     nohup spotify >/dev/null 2>&1 &
+    (
+      sleep 2
+      refresh_waybar
+    ) >/dev/null 2>&1 &
     return 0
   fi
 
   if command -v flatpak >/dev/null 2>&1 && flatpak info com.spotify.Client >/dev/null 2>&1; then
     nohup flatpak run com.spotify.Client >/dev/null 2>&1 &
+    (
+      sleep 2
+      refresh_waybar
+    ) >/dev/null 2>&1 &
     return 0
   fi
 
@@ -33,6 +42,10 @@ emit_json() {
   tooltip="${tooltip//$'\n'/\\n}"
 
   printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$text" "$tooltip" "$class"
+}
+
+refresh_waybar() {
+  pkill "-RTMIN+${refresh_signal}" -x waybar >/dev/null 2>&1 || true
 }
 
 status_json() {
@@ -87,6 +100,10 @@ case "$action" in
   toggle)
     if command -v playerctl >/dev/null 2>&1 && playerctl --player=spotify status >/dev/null 2>&1; then
       playerctl --player=spotify play-pause
+      (
+        sleep 0.15
+        refresh_waybar
+      ) >/dev/null 2>&1 &
     else
       launch_spotify
     fi
@@ -94,6 +111,10 @@ case "$action" in
   next)
     if command -v playerctl >/dev/null 2>&1 && playerctl --player=spotify status >/dev/null 2>&1; then
       playerctl --player=spotify next
+      (
+        sleep 0.15
+        refresh_waybar
+      ) >/dev/null 2>&1 &
     else
       launch_spotify
     fi
@@ -101,6 +122,10 @@ case "$action" in
   previous)
     if command -v playerctl >/dev/null 2>&1 && playerctl --player=spotify status >/dev/null 2>&1; then
       playerctl --player=spotify previous
+      (
+        sleep 0.15
+        refresh_waybar
+      ) >/dev/null 2>&1 &
     else
       launch_spotify
     fi

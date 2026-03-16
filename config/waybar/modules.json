@@ -52,7 +52,9 @@
   "custom/spotify": {
     "exec": "~/.config/waybar/scripts/spotify.sh status",
     "return-type": "json",
-    "interval": 2,
+    "interval": 10,
+    "signal": 8,
+    "exec-on-event": false,
     "format": "{text}",
     "max-length": 32,
     "tooltip": true,
@@ -156,7 +158,7 @@
   },
 
   "custom/power": {
-    "format": "",
+    "format": "⏻",
     "tooltip": false,
     "on-click": "~/.config/waybar/scripts/power-menu.sh"
   },

@@ -6,6 +6,88 @@ notify() {
   notify-send "Waybar Power" "$1"
 }
 
+select_action() {
+  if command -v yad >/dev/null 2>&1; then
+    local choice
+    choice="$(
+      yad --list \
+      --title="Session" \
+      --width=520 \
+      --height=320 \
+      --column=Action \
+      --column=Description \
+      "lock" "Lock the current session" \
+      "logout" "Exit Hyprland" \
+      "reboot" "Reboot Fedora" \
+      "shutdown" "Power off the machine" \
+      "windows" "Reboot into Windows" \
+      --button=Cancel:1 2>/dev/null
+    )" || return 1
+    printf '%s\n' "${choice%%|*}"
+    return 0
+  fi
+
+  if command -v zenity >/dev/null 2>&1; then
+    local choice
+    choice="$(
+      zenity --list \
+      --title="Session" \
+      --width=520 \
+      --height=320 \
+      --column=Action \
+      --column=Description \
+      "lock" "Lock the current session" \
+      "logout" "Exit Hyprland" \
+      "reboot" "Reboot Fedora" \
+      "shutdown" "Power off the machine" \
+      "windows" "Reboot into Windows" 2>/dev/null
+    )" || return 1
+    printf '%s\n' "${choice%%|*}"
+    return 0
+  fi
+
+  if command -v kitty >/dev/null 2>&1; then
+    local result_file
+    result_file="$(mktemp)"
+
+    kitty --title="Session" sh -lc '
+      clear
+      cat <<'"'"'EOF'"'"'
+Session controls
+
+1. Lock screen
+2. Log out of Hyprland
+3. Reboot Fedora
+4. Shut down
+5. Reboot into Windows
+
+Press Enter without a choice to cancel.
+EOF
+      printf "\nChoose an option [1-5]: "
+      read -r choice
+      case "$choice" in
+        1) printf "lock" > "$1" ;;
+        2) printf "logout" > "$1" ;;
+        3) printf "reboot" > "$1" ;;
+        4) printf "shutdown" > "$1" ;;
+        5) printf "windows" > "$1" ;;
+      esac
+    ' sh "$result_file" >/dev/null 2>&1 || true
+
+    if [[ -f "$result_file" ]]; then
+      cat "$result_file"
+      rm -f "$result_file"
+      return 0
+    fi
+
+    rm -f "$result_file"
+    return 1
+  fi
+
+  notify "Install yad or zenity for session dialogs"
+  return 1
+}
+
 run_windows_reboot() {
   local win_script="/usr/local/bin/reboot-to-windows"
 
@@ -25,49 +107,15 @@ run_windows_reboot() {
   fi
 }
 
-menu() {
-  choices="$(cat <<'EOF'
-󰍹  Windows
-󰌾  Lock
-󰍃  Logout
-󰜉  Reboot
-󰐥  Shutdown
-EOF
-)"
-
-  # Approximate placement under the top-right power button.
-  xoffset="-18"
-  yoffset="42"
-
-  if command -v wofi >/dev/null 2>&1; then
-    printf "%s\n" "$choices" | wofi \
-      --dmenu \
-      --prompt "Session" \
-      --lines 5 \
-      --width 260 \
-      --hide-scroll \
-      --location top_right \
-      --xoffset "$xoffset" \
-      --yoffset "$yoffset"
-  elif command -v fuzzel >/dev/null 2>&1; then
-    printf "%s\n" "$choices" | fuzzel --dmenu --prompt "Session> "
-  elif command -v rofi >/dev/null 2>&1; then
-    printf "%s\n" "$choices" | rofi -dmenu -i -p "Session" -lines 5
-  else
-    notify "No menu app found (install wofi, fuzzel, or rofi)"
-    return 1
-  fi
-}
-
-choice="$(menu || true)"
+choice="$(select_action || true)"
 case "$choice" in
-  "󰍹  Windows"|"Windows"|"windows")
+  windows)
     run_windows_reboot
     ;;
-  "󰌾  Lock"|"Lock"|"lock")
+  lock)
     loginctl lock-session
     ;;
-  "󰍃  Logout"|"Logout"|"logout")
+  logout)
     if command -v hyprctl >/dev/null 2>&1; then
       hyprctl dispatch exit
     else
@@ -75,10 +123,10 @@ case "$choice" in
       exit 1
     fi
     ;;
-  "󰜉  Reboot"|"Reboot"|"reboot")
+  reboot)
     systemctl reboot
     ;;
-  "󰐥  Shutdown"|"Shutdown"|"shutdown")
+  shutdown)
     systemctl poweroff
     ;;
   *)
