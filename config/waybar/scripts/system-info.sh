@@ -10,38 +10,18 @@ show_text_dialog() {
   tmp_file="$(mktemp)"
   printf '%s\n' "$body" > "$tmp_file"
 
-  if command -v yad >/dev/null 2>&1; then
-    yad --title="$title" \
-      --text-info \
-      --fontname="Noto Sans Mono 11" \
-      --width=760 \
-      --height=480 \
-      --filename="$tmp_file" \
-      --button=Close:0 >/dev/null 2>&1 || true
+  if ! command -v yad >/dev/null 2>&1; then
     rm -f "$tmp_file"
-    return 0
+    exit 0
   fi
 
-  if command -v zenity >/dev/null 2>&1; then
-    zenity --text-info \
-      --title="$title" \
-      --width=760 \
-      --height=480 \
-      --filename="$tmp_file" >/dev/null 2>&1 || true
-    rm -f "$tmp_file"
-    return 0
-  fi
-
-  if command -v kitty >/dev/null 2>&1; then
-    kitty --title="$title" sh -lc '
-      clear
-      cat "$1"
-      rm -f "$1"
-      printf "\nPress Enter to close..."
-      read -r _
-    ' sh "$tmp_file" >/dev/null 2>&1 || true
-    return 0
-  fi
+  yad --title="$title" \
+    --text-info \
+    --fontname="Noto Sans Mono 11" \
+    --width=760 \
+    --height=480 \
+    --filename="$tmp_file" \
+    --button=Close:0 >/dev/null 2>&1 || true
 
   rm -f "$tmp_file"
 }

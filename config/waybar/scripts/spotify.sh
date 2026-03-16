@@ -37,6 +37,9 @@ emit_json() {
   local tooltip="$2"
   local class="$3"
 
+  text="${text//\\/\\\\}"
+  text="${text//\"/\\\"}"
+  text="${text//$'\n'/ }"
   tooltip="${tooltip//\\/\\\\}"
   tooltip="${tooltip//\"/\\\"}"
   tooltip="${tooltip//$'\n'/\\n}"

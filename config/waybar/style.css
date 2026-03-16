@@ -107,28 +107,20 @@ window#waybar.empty #window {
 
 #custom-spotify {
   color: @mauve;
-  background: rgba(198, 160, 246, 0.08);
-  border: 1px solid rgba(198, 160, 246, 0.16);
   margin-left: 18px;
   min-width: 0;
 }
 
 #custom-spotify.spotify-playing {
   color: @sky;
-  background: rgba(145, 215, 227, 0.14);
-  border-color: rgba(145, 215, 227, 0.20);
 }
 
 #custom-spotify.spotify-paused {
   color: @peach;
-  background: rgba(245, 169, 127, 0.10);
-  border-color: rgba(245, 169, 127, 0.16);
 }
 
 #custom-spotify.spotify-offline {
   color: @overlay1;
-  background: @base;
-  border-color: rgba(110, 115, 141, 0.12);
 }
 
 #pulseaudio {
