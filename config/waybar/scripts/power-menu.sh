@@ -16,9 +16,14 @@ select_action() {
 
   choice="$(
     yad --list \
-      --title="Session" \
-      --width=520 \
+      --title="Waybar Session" \
+      --width=560 \
       --height=320 \
+      --center \
+      --on-top \
+      --skip-taskbar \
+      --undecorated \
+      --margins=14 \
       --column=Action \
       --column=Description \
       "lock" "Lock the current session" \

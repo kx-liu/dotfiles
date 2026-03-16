@@ -15,13 +15,18 @@ show_text_dialog() {
     exit 0
   fi
 
-  yad --title="$title" \
+  yad --title="Waybar ${title}" \
     --text-info \
+    --undecorated \
+    --skip-taskbar \
+    --on-top \
+    --close-on-unfocus \
     --fontname="Noto Sans Mono 11" \
-    --width=760 \
-    --height=480 \
+    --margins=14 \
+    --width=720 \
+    --height=340 \
     --filename="$tmp_file" \
-    --button=Close:0 >/dev/null 2>&1 || true
+    --no-buttons >/dev/null 2>&1 || true
 
   rm -f "$tmp_file"
 }
