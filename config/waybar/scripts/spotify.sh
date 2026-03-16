@@ -2,7 +2,6 @@
 set -euo pipefail
 
 action="${1:-status}"
-refresh_signal="8"
 
 notify() {
   command -v notify-send >/dev/null 2>&1 || return 0
@@ -45,10 +44,6 @@ emit_json() {
   tooltip="${tooltip//$'\n'/\\n}"
 
   printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$text" "$tooltip" "$class"
-}
-
-refresh_waybar() {
-  pkill "-RTMIN+${refresh_signal}" -x waybar >/dev/null 2>&1 || true
 }
 
 status_json() {
@@ -96,17 +91,30 @@ Middle click: next
 Right click: previous" "$class"
 }
 
+watch_loop() {
+  local last=""
+  local current=""
+
+  while :; do
+    current="$(status_json)"
+    if [[ "$current" != "$last" ]]; then
+      printf '%s\n' "$current"
+      last="$current"
+    fi
+    sleep 1
+  done
+}
+
 case "$action" in
   status)
     status_json
     ;;
+  watch)
+    watch_loop
+    ;;
   toggle)
     if command -v playerctl >/dev/null 2>&1 && playerctl --player=spotify status >/dev/null 2>&1; then
       playerctl --player=spotify play-pause
-      (
-        sleep 0.15
-        refresh_waybar
-      ) >/dev/null 2>&1 &
     else
       launch_spotify
     fi
@@ -114,10 +122,6 @@ case "$action" in
   next)
     if command -v playerctl >/dev/null 2>&1 && playerctl --player=spotify status >/dev/null 2>&1; then
       playerctl --player=spotify next
-      (
-        sleep 0.15
-        refresh_waybar
-      ) >/dev/null 2>&1 &
     else
       launch_spotify
     fi
@@ -125,10 +129,6 @@ case "$action" in
   previous)
     if command -v playerctl >/dev/null 2>&1 && playerctl --player=spotify status >/dev/null 2>&1; then
       playerctl --player=spotify previous
-      (
-        sleep 0.15
-        refresh_waybar
-      ) >/dev/null 2>&1 &
     else
       launch_spotify
     fi

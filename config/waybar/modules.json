@@ -50,11 +50,8 @@
   },
 
   "custom/spotify": {
-    "exec": "~/.config/waybar/scripts/spotify.sh status",
+    "exec": "~/.config/waybar/scripts/spotify.sh watch",
     "return-type": "json",
-    "interval": 10,
-    "signal": 8,
-    "exec-on-event": false,
     "format": "{text}",
     "max-length": 32,
     "tooltip": true,

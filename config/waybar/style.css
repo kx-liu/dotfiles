@@ -179,7 +179,6 @@ window#waybar.empty #window {
 
 #custom-input-source.ime-zh {
   color: @green;
-  background: rgba(166, 218, 149, 0.12);
 }
 
 #custom-input-source.ime-en {
@@ -188,7 +187,6 @@ window#waybar.empty #window {
 
 #custom-input-source.ime-off {
   color: @red;
-  background: rgba(237, 135, 150, 0.14);
 }
 
 #custom-cpu,
