@@ -1,10 +1,4 @@
 {
-  "custom/launcher": {
-    "format": "APP",
-    "tooltip": false,
-    "on-click": "~/.config/waybar/scripts/launcher.sh"
-  },
-
   "hyprland/workspaces": {
     "disable-scroll": true,
     "format": "{name}",
@@ -55,6 +49,18 @@
     }
   },
 
+  "custom/spotify": {
+    "exec": "~/.config/waybar/scripts/spotify.sh status",
+    "return-type": "json",
+    "interval": 2,
+    "format": "{text}",
+    "max-length": 32,
+    "tooltip": true,
+    "on-click": "~/.config/waybar/scripts/spotify.sh toggle",
+    "on-click-middle": "~/.config/waybar/scripts/spotify.sh next",
+    "on-click-right": "~/.config/waybar/scripts/spotify.sh previous"
+  },
+
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": "🔇 muted",
@@ -93,7 +99,8 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": true
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/system-info.sh cpu"
   },
 
   "custom/gpu": {
@@ -101,7 +108,8 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": true
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/system-info.sh gpu"
   },
 
   "custom/gpu-temp": {
@@ -109,18 +117,8 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": true
-  },
-
-  "custom/idle-mode": {
-    "exec": "~/.config/waybar/scripts/idle-mode.sh status",
-    "return-type": "json",
-    "interval": 1,
-    "format": "{text}",
-    "tooltip": true,
-    "on-click": "~/.config/waybar/scripts/idle-mode.sh toggle",
-    "on-click-middle": "~/.config/waybar/scripts/idle-awake.sh",
-    "on-click-right": "~/.config/waybar/scripts/idle-sleep.sh"
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/system-info.sh gpu"
   },
 
   "custom/cpu": {
@@ -128,17 +126,24 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": true
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/system-info.sh cpu"
   },
 
-  "memory": { "format": "RAM {percentage}%", "interval": 1 },
+  "memory": {
+    "format": "RAM {percentage}%",
+    "interval": 1,
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/system-info.sh memory"
+  },
 
   "custom/input-source": {
-    "exec": "~/.config/waybar/scripts/ime.sh",
+    "exec-if": "bash -lc 'command -v fcitx5-remote >/dev/null 2>&1 && [[ -n \"$(fcitx5-remote -n 2>/dev/null)\" ]]'",
+    "exec": "bash -lc 'name=$(fcitx5-remote -n 2>/dev/null || true); low=$(printf \"%s\" \"$name\" | tr \"[:upper:]\" \"[:lower:]\"); if [[ \"$low\" == *keyboard* || \"$low\" == *english* || \"$low\" == *latin* ]]; then printf \"{\\\"text\\\":\\\"EN\\\",\\\"class\\\":\\\"ime-en\\\"}\\\\n\"; else printf \"{\\\"text\\\":\\\"中\\\",\\\"class\\\":\\\"ime-zh\\\"}\\\\n\"; fi'",
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": true
+    "tooltip": false
   },
 
   "custom/theme-toggle": {
@@ -151,7 +156,7 @@
   },
 
   "custom/power": {
-    "format": "⏻",
+    "format": "",
     "tooltip": false,
     "on-click": "~/.config/waybar/scripts/power-menu.sh"
   },
@@ -173,6 +178,6 @@
 
   "group/system": {
     "orientation": "inherit",
-    "modules": ["custom/idle-mode", "custom/theme-toggle", "custom/power"]
+    "modules": ["custom/theme-toggle", "custom/power"]
   }
 }

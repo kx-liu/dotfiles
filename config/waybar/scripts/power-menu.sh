@@ -27,32 +27,32 @@ run_windows_reboot() {
 
 menu() {
   choices="$(cat <<'EOF'
-  Windows
-  Lock
-  Logout
-  Reboot
-  Shutdown
+󰍹  Windows
+󰌾  Lock
+󰍃  Logout
+󰜉  Reboot
+󰐥  Shutdown
 EOF
 )"
 
   # Approximate placement under the top-right power button.
-  xoffset="-12"
+  xoffset="-18"
   yoffset="42"
 
   if command -v wofi >/dev/null 2>&1; then
     printf "%s\n" "$choices" | wofi \
       --dmenu \
-      --prompt "Power" \
+      --prompt "Session" \
       --lines 5 \
-      --width 220 \
+      --width 260 \
       --hide-scroll \
       --location top_right \
       --xoffset "$xoffset" \
       --yoffset "$yoffset"
   elif command -v fuzzel >/dev/null 2>&1; then
-    printf "%s\n" "$choices" | fuzzel --dmenu --prompt "Power> "
+    printf "%s\n" "$choices" | fuzzel --dmenu --prompt "Session> "
   elif command -v rofi >/dev/null 2>&1; then
-    printf "%s\n" "$choices" | rofi -dmenu -i -p "Power" -lines 5
+    printf "%s\n" "$choices" | rofi -dmenu -i -p "Session" -lines 5
   else
     notify "No menu app found (install wofi, fuzzel, or rofi)"
     return 1
@@ -61,13 +61,13 @@ EOF
 
 choice="$(menu || true)"
 case "$choice" in
-  "  Windows"|"Windows"|"windows")
+  "󰍹  Windows"|"Windows"|"windows")
     run_windows_reboot
     ;;
-  "  Lock"|"Lock"|"lock")
+  "󰌾  Lock"|"Lock"|"lock")
     loginctl lock-session
     ;;
-  "  Logout"|"Logout"|"logout")
+  "󰍃  Logout"|"Logout"|"logout")
     if command -v hyprctl >/dev/null 2>&1; then
       hyprctl dispatch exit
     else
@@ -75,10 +75,10 @@ case "$choice" in
       exit 1
     fi
     ;;
-  "  Reboot"|"Reboot"|"reboot")
+  "󰜉  Reboot"|"Reboot"|"reboot")
     systemctl reboot
     ;;
-  "  Shutdown"|"Shutdown"|"shutdown")
+  "󰐥  Shutdown"|"Shutdown"|"shutdown")
     systemctl poweroff
     ;;
   *)

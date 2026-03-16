@@ -20,6 +20,11 @@ emit_nvidia() {
       --format=csv,noheader,nounits 2>/dev/null | head -n1
   )"
   [ -n "${line:-}" ] || return 1
+  case "$line" in
+    Failed\ to*|No\ devices\ were\ found*)
+      return 1
+      ;;
+  esac
 
   IFS=',' read -r name util temp mem_used mem_total <<EOF
 $line

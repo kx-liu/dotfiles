@@ -62,20 +62,20 @@ tooltip label {
 
 #submap,
 #hyprland-submap,
-#custom-launcher,
 #window,
 #clock,
+#custom-spotify,
 #pulseaudio,
 #bluetooth,
 #network,
 #custom-cpu-temp,
 #custom-gpu,
 #custom-gpu-temp,
-#custom-idle-mode,
 #custom-cpu,
 #memory,
 #custom-input-source,
-#custom-theme-toggle {
+#custom-theme-toggle,
+#custom-power {
   padding: 3px 8px;
   margin: 4px 0;
   border-radius: 10px;
@@ -101,17 +101,27 @@ window#waybar.empty #window {
   margin-left: 5px;
 }
 
-#custom-launcher {
-  color: @mauve;
-  background: rgba(36, 39, 58, 0.95);
-  margin: 4px 4px 4px 6px;
-  padding: 3px 9px;
-  border-radius: 10px;
-}
-
 #clock {
   color: @sky;
   margin: 4px 8px;
+}
+
+#custom-spotify {
+  color: #1db954;
+  margin-left: 18px;
+  min-width: 0;
+}
+
+#custom-spotify.spotify-playing {
+  background: rgba(29, 185, 84, 0.12);
+}
+
+#custom-spotify.spotify-paused {
+  color: @green;
+}
+
+#custom-spotify.spotify-offline {
+  color: @overlay1;
 }
 
 #pulseaudio {
@@ -149,23 +159,13 @@ window#waybar.empty #window {
   color: @sapphire;
 }
 
-#custom-idle-mode {
-  color: @base;
-  background: @yellow;
-}
-
-#custom-idle-mode.mode-awake {
-  color: @base;
-  background: @yellow;
-}
-
-#custom-idle-mode.mode-sleep {
-  color: @yellow;
-  background: @base;
-}
-
 #custom-input-source {
   color: @peach;
+  font-family: "Noto Sans CJK SC", "Noto Sans CJK TC", "Noto Sans CJK JP", "Noto Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 32px;
+  text-align: center;
 }
 
 #custom-theme-toggle {
@@ -208,14 +208,19 @@ window#waybar.empty #window {
 #custom-cpu,
 #custom-gpu,
 #memory,
-#custom-idle-mode {
+#custom-theme-toggle {
   margin-left: 18px;
 }
 
 #custom-power {
-  color: @base;
-  background: @red;
-  border-radius: 10px;
+  color: @rosewater;
+  background: rgba(238, 153, 160, 0.14);
+  border: 1px solid rgba(238, 153, 160, 0.18);
   margin: 4px 12px 4px 0;
   padding: 3px 10px;
+}
+
+#custom-power:hover {
+  background: rgba(238, 153, 160, 0.22);
+  color: @text;
 }
