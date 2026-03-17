@@ -12,6 +12,24 @@ trim() {
   printf '%s' "$1" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//'
 }
 
+cursor_position() {
+  local out x y
+
+  if command -v hyprctl >/dev/null 2>&1; then
+    out="$(hyprctl cursorpos -j 2>/dev/null || true)"
+    if [[ -n "$out" ]]; then
+      x="$(printf '%s\n' "$out" | sed -n 's/.*"x"[[:space:]]*:[[:space:]]*\([0-9.]\+\).*/\1/p' | head -n1)"
+      y="$(printf '%s\n' "$out" | sed -n 's/.*"y"[[:space:]]*:[[:space:]]*\([0-9.]\+\).*/\1/p' | head -n1)"
+      if [[ -n "$x" && -n "$y" ]]; then
+        printf '%s %s\n' "${x%.*}" "${y%.*}"
+        return 0
+      fi
+    fi
+  fi
+
+  printf '0 0\n'
+}
+
 kill_popup() {
   if [[ -f "$pid_file" ]]; then
     local pid
@@ -190,8 +208,35 @@ popup_height() {
   esac
 }
 
+popup_position() {
+  local width height cx cy posx posy
+
+  width="$(popup_width)"
+  height="$(popup_height)"
+  read -r cx cy <<EOF
+$(cursor_position)
+EOF
+
+  posx=$((cx - width / 2))
+  posy=$((cy + 18))
+
+  if (( posx < 0 )); then
+    posx=0
+  fi
+  if (( posy < 0 )); then
+    posy=0
+  fi
+
+  printf '%s %s\n' "$posx" "$posy"
+}
+
 launch_popup() {
   command -v yad >/dev/null 2>&1 || exit 0
+
+  local posx posy
+  read -r posx posy <<EOF
+$(popup_position)
+EOF
 
   case "$mode" in
     cpu)
@@ -203,7 +248,6 @@ launch_popup() {
       ) | yad \
         --title="$(popup_title)" \
         --form \
-        --mouse \
         --fixed \
         --undecorated \
         --skip-taskbar \
@@ -213,6 +257,8 @@ launch_popup() {
         --align=left \
         --width="$(popup_width)" \
         --height="$(popup_height)" \
+        --posx="$posx" \
+        --posy="$posy" \
         --columns=1 \
         --margins=12 \
         --fontname="Noto Sans Mono 11" \
@@ -232,7 +278,6 @@ launch_popup() {
       ) | yad \
         --title="$(popup_title)" \
         --form \
-        --mouse \
         --fixed \
         --undecorated \
         --skip-taskbar \
@@ -242,6 +287,8 @@ launch_popup() {
         --align=left \
         --width="$(popup_width)" \
         --height="$(popup_height)" \
+        --posx="$posx" \
+        --posy="$posy" \
         --columns=1 \
         --margins=12 \
         --fontname="Noto Sans Mono 11" \
@@ -259,7 +306,6 @@ launch_popup() {
       ) | yad \
         --title="$(popup_title)" \
         --form \
-        --mouse \
         --fixed \
         --undecorated \
         --skip-taskbar \
@@ -269,6 +315,8 @@ launch_popup() {
         --align=left \
         --width="$(popup_width)" \
         --height="$(popup_height)" \
+        --posx="$posx" \
+        --posy="$posy" \
         --columns=1 \
         --margins=12 \
         --fontname="Noto Sans Mono 11" \
