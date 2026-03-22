@@ -98,8 +98,7 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": false,
-    "on-click": "~/.config/waybar/scripts/system-info.sh cpu"
+    "tooltip": true
   },
 
   "custom/gpu": {
@@ -107,8 +106,7 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": false,
-    "on-click": "~/.config/waybar/scripts/system-info.sh gpu"
+    "tooltip": true
   },
 
   "custom/gpu-temp": {
@@ -116,8 +114,7 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": false,
-    "on-click": "~/.config/waybar/scripts/system-info.sh gpu"
+    "tooltip": true
   },
 
   "custom/cpu": {
@@ -125,15 +122,12 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": false,
-    "on-click": "~/.config/waybar/scripts/system-info.sh cpu"
+    "tooltip": true
   },
 
   "memory": {
     "format": "RAM {percentage}%",
-    "interval": 1,
-    "tooltip": false,
-    "on-click": "~/.config/waybar/scripts/system-info.sh memory"
+    "interval": 1
   },
 
   "custom/input-source": {
