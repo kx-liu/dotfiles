@@ -93,6 +93,22 @@
     "on-click-right": "~/.config/waybar/scripts/network-manage.sh"
   },
 
+  "custom/net-down": {
+    "exec": "~/.config/waybar/scripts/network-speed.sh down",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true
+  },
+
+  "custom/net-up": {
+    "exec": "~/.config/waybar/scripts/network-speed.sh up",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true
+  },
+
   "custom/cpu-temp": {
     "exec": "~/.config/waybar/scripts/temp-status.sh cpu",
     "return-type": "json",
@@ -156,7 +172,12 @@
 
   "group/connectivity": {
     "orientation": "inherit",
-    "modules": ["custom/input-source", "pulseaudio", "bluetooth", "network"]
+    "modules": ["custom/input-source", "pulseaudio", "bluetooth", "group/network"]
+  },
+
+  "group/network": {
+    "orientation": "inherit",
+    "modules": ["network", "custom/net-down", "custom/net-up"]
   },
 
   "group/cpu": {

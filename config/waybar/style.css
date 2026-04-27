@@ -68,6 +68,8 @@ tooltip label {
 #pulseaudio,
 #bluetooth,
 #network,
+#custom-net-down,
+#custom-net-up,
 #custom-cpu-temp,
 #custom-gpu,
 #custom-gpu-temp,
@@ -139,6 +141,14 @@ window#waybar.empty #window {
   color: @green;
 }
 
+#custom-net-down {
+  color: @sky;
+}
+
+#custom-net-up {
+  color: @peach;
+}
+
 #network.disconnected,
 #network.disabled {
   color: @red;
@@ -197,6 +207,10 @@ window#waybar.empty #window {
 
 #group-connectivity {
   margin-left: 6px;
+}
+
+#group-network {
+  margin-left: 0;
 }
 
 /* Emphasize group boundaries by spacing the first module of each group. */
