@@ -144,12 +144,12 @@ window#waybar.empty #window {
 
 #custom-net-down {
   color: @sky;
-  min-width: 60px;
+  min-width: 54px;
 }
 
 #custom-net-up {
   color: @peach;
-  min-width: 60px;
+  min-width: 54px;
 }
 
 #network.disconnected,
@@ -210,24 +210,22 @@ window#waybar.empty #window {
 
 #custom-cpu,
 #custom-gpu {
-  min-width: 58px;
+  min-width: 48px;
 }
 
 #custom-cpu-temp,
 #custom-gpu-temp {
-  min-width: 80px;
+  min-width: 62px;
 }
 
 #custom-memory {
-  min-width: 68px;
+  min-width: 52px;
 }
 
 #custom-cpu,
 #custom-cpu-temp,
 #custom-gpu,
 #custom-gpu-temp,
-#custom-net-down,
-#custom-net-up,
 #custom-memory {
   font-family: "Noto Sans Mono", "Symbols Nerd Font Mono", "Noto Sans CJK SC", monospace;
 }
