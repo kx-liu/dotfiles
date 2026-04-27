@@ -70,9 +70,9 @@ esac
 
 if ! iface="$(active_iface)"; then
   if [[ "$direction" == "down" ]]; then
-    emit "↓ --" "No active network interface" "net-down-off"
+    emit "D --" "No active network interface" "net-down-off"
   else
-    emit "↑ --" "No active network interface" "net-up-off"
+    emit "U --" "No active network interface" "net-up-off"
   fi
   exit 0
 fi
@@ -80,7 +80,11 @@ fi
 rx_file="/sys/class/net/${iface}/statistics/rx_bytes"
 tx_file="/sys/class/net/${iface}/statistics/tx_bytes"
 [[ -r "$rx_file" && -r "$tx_file" ]] || {
-  emit "${direction/down/↓}" "Network statistics unavailable for ${iface}" "net-off"
+  if [[ "$direction" == "down" ]]; then
+    emit "D --" "Network statistics unavailable for ${iface}" "net-off"
+  else
+    emit "U --" "Network statistics unavailable for ${iface}" "net-off"
+  fi
   exit 0
 }
 
@@ -88,6 +92,11 @@ now="$(date +%s)"
 rx="$(cat "$rx_file")"
 tx="$(cat "$tx_file")"
 state_file="${state_dir}/${iface}.state"
+if ! touch "$state_file" 2>/dev/null; then
+  state_dir="/tmp/waybar-network-speed"
+  mkdir -p "$state_dir"
+  state_file="${state_dir}/${iface}.state"
+fi
 
 prev_ts="$now"
 prev_rx="$rx"
@@ -117,8 +126,8 @@ elif (( now > prev_ts )); then
   printf '%s %s %s %s %s\n' "$now" "$rx" "$tx" "$rx_rate" "$tx_rate" > "$state_file"
 fi
 
-down_text="↓ $(format_rate "$rx_rate")"
-up_text="↑ $(format_rate "$tx_rate")"
+down_text="D $(format_rate "$rx_rate")"
+up_text="U $(format_rate "$tx_rate")"
 tooltip="${iface}\nDownload: $(format_rate "$rx_rate")\nUpload: $(format_rate "$tx_rate")"
 
 if [[ "$direction" == "down" ]]; then
