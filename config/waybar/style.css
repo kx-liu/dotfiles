@@ -144,12 +144,12 @@ window#waybar.empty #window {
 
 #custom-net-down {
   color: @sky;
-  min-width: 54px;
+  min-width: 58px;
 }
 
 #custom-net-up {
   color: @peach;
-  min-width: 54px;
+  min-width: 58px;
 }
 
 #network.disconnected,
@@ -210,16 +210,16 @@ window#waybar.empty #window {
 
 #custom-cpu,
 #custom-gpu {
-  min-width: 48px;
+  min-width: 52px;
 }
 
 #custom-cpu-temp,
 #custom-gpu-temp {
-  min-width: 62px;
+  min-width: 68px;
 }
 
 #custom-memory {
-  min-width: 52px;
+  min-width: 56px;
 }
 
 #custom-cpu,
