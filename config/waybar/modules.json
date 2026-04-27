@@ -175,7 +175,7 @@
 
   "group/connectivity": {
     "orientation": "inherit",
-    "modules": ["custom/input-source", "pulseaudio", "bluetooth", "network", "custom/net-down", "custom/net-up"]
+    "modules": ["pulseaudio", "bluetooth", "network", "custom/net-down", "custom/net-up"]
   },
 
   "group/cpu": {

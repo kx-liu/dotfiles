@@ -139,7 +139,7 @@ window#waybar.empty #window {
 
 #network {
   color: @green;
-  margin-left: 18px;
+  margin-left: 12px;
 }
 
 #custom-net-down {
@@ -226,8 +226,15 @@ window#waybar.empty #window {
 #custom-cpu-temp,
 #custom-gpu,
 #custom-gpu-temp,
+#custom-net-down,
+#custom-net-up,
 #custom-memory {
   font-family: "Noto Sans Mono", "Symbols Nerd Font Mono", "Noto Sans CJK SC", monospace;
+}
+
+#custom-net-down,
+#custom-net-up {
+  font-size: 13px;
 }
 
 #group-connectivity {
@@ -239,7 +246,7 @@ window#waybar.empty #window {
 #custom-gpu,
 #custom-memory,
 #custom-theme-toggle {
-  margin-left: 18px;
+  margin-left: 12px;
 }
 
 #custom-power {

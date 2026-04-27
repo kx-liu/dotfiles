@@ -31,8 +31,8 @@ This repo is centered on a Fedora Wayland desktop built around Hyprland, Waybar,
 Detailed module behavior lives in `config/waybar/modules.json`.
 
 - `custom/spotify` is a custom script-backed module using `playerctl`. It runs in watch mode so state changes inside Spotify are reflected in Waybar without needing a manual click refresh.
-- `group/connectivity` bundles input source, audio, Bluetooth, and network into one visual block.
-- The input-source module no longer depends on the older `ime.sh` helper. It queries `fcitx5-remote` inline and renders `EN` or `中`.
+- `group/connectivity` bundles audio, Bluetooth, and network into one visual block.
+- The input-source module is archived in `modules.json` but not currently shown in the bar. It no longer depends on the older `ime.sh` helper; if restored, it queries `fcitx5-remote` inline and renders `EN` or `中`.
 - CPU, GPU, and RAM use tooltip-based status modules. CPU usage comes from `cpu-status.sh`, temperatures from `temp-status.sh`, GPU usage from `gpu-status.sh`, and RAM comes from `memory-status.sh` so its live percentage can keep a stable width.
 - `custom/theme-toggle` flips between transparent and solid Waybar themes.
 - `custom/power` launches a `yad` session chooser. Its placement is controlled by Hyprland window rules rather than Waybar itself.
