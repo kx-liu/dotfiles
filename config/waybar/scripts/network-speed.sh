@@ -134,8 +134,8 @@ elif (( now > prev_ts )); then
   printf '%s %s %s %s %s\n' "$now" "$rx" "$tx" "$rx_rate" "$tx_rate" > "$state_file"
 fi
 
-down_text="<span font_desc=\"Noto Sans 13\">↓</span> <span font_desc=\"Noto Sans Mono 12\">$(markup_escape "$(format_rate "$rx_rate")")</span>"
-up_text="<span font_desc=\"Noto Sans 13\">↑</span> <span font_desc=\"Noto Sans Mono 12\">$(markup_escape "$(format_rate "$tx_rate")")</span>"
+down_text="<span font_family=\"Noto Sans\">↓</span> <span font_family=\"Noto Sans Mono\">$(markup_escape "$(format_rate "$rx_rate")")</span>"
+up_text="<span font_family=\"Noto Sans\">↑</span> <span font_family=\"Noto Sans Mono\">$(markup_escape "$(format_rate "$tx_rate")")</span>"
 tooltip="${iface}\nDownload: $(format_rate "$rx_rate")\nUpload: $(format_rate "$tx_rate")"
 
 if [[ "$direction" == "down" ]]; then
