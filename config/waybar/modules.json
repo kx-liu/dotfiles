@@ -172,12 +172,7 @@
 
   "group/connectivity": {
     "orientation": "inherit",
-    "modules": ["custom/input-source", "pulseaudio", "bluetooth", "group/network"]
-  },
-
-  "group/network": {
-    "orientation": "inherit",
-    "modules": ["network", "custom/net-down", "custom/net-up"]
+    "modules": ["custom/input-source", "pulseaudio", "bluetooth", "network", "custom/net-down", "custom/net-up"]
   },
 
   "group/cpu": {

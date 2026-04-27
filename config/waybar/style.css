@@ -139,6 +139,7 @@ window#waybar.empty #window {
 
 #network {
   color: @green;
+  margin-left: 18px;
 }
 
 #custom-net-down {
@@ -207,10 +208,6 @@ window#waybar.empty #window {
 
 #group-connectivity {
   margin-left: 6px;
-}
-
-#group-network {
-  margin-left: 18px;
 }
 
 /* Emphasize group boundaries by spacing the first module of each group. */

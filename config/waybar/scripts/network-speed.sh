@@ -70,9 +70,9 @@ esac
 
 if ! iface="$(active_iface)"; then
   if [[ "$direction" == "down" ]]; then
-    emit "D --" "No active network interface" "net-down-off"
+    emit "↓ --" "No active network interface" "net-down-off"
   else
-    emit "U --" "No active network interface" "net-up-off"
+    emit "↑ --" "No active network interface" "net-up-off"
   fi
   exit 0
 fi
@@ -81,9 +81,9 @@ rx_file="/sys/class/net/${iface}/statistics/rx_bytes"
 tx_file="/sys/class/net/${iface}/statistics/tx_bytes"
 [[ -r "$rx_file" && -r "$tx_file" ]] || {
   if [[ "$direction" == "down" ]]; then
-    emit "D --" "Network statistics unavailable for ${iface}" "net-off"
+    emit "↓ --" "Network statistics unavailable for ${iface}" "net-off"
   else
-    emit "U --" "Network statistics unavailable for ${iface}" "net-off"
+    emit "↑ --" "Network statistics unavailable for ${iface}" "net-off"
   fi
   exit 0
 }
@@ -126,8 +126,8 @@ elif (( now > prev_ts )); then
   printf '%s %s %s %s %s\n' "$now" "$rx" "$tx" "$rx_rate" "$tx_rate" > "$state_file"
 fi
 
-down_text="D $(format_rate "$rx_rate")"
-up_text="U $(format_rate "$tx_rate")"
+down_text="↓ $(format_rate "$rx_rate")"
+up_text="↑ $(format_rate "$tx_rate")"
 tooltip="${iface}\nDownload: $(format_rate "$rx_rate")\nUpload: $(format_rate "$tx_rate")"
 
 if [[ "$direction" == "down" ]]; then
