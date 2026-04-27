@@ -5,7 +5,7 @@ setopt extended_glob
 typeset -g ZSHRC_D="$HOME/.zshrc.d"
 
 # Optional early TTY output must happen before the instant prompt preamble.
-if [[ "$TERM" == "xterm-kitty" ]] \
+if [[ "$TERM" == "xterm-kitty" || "$TERM" == "xterm-ghostty" || "$TERM_PROGRAM" == "ghostty" ]] \
   && command -v fastfetch >/dev/null 2>&1 \
   && [[ -z "$SSH_CONNECTION" && -z "$TMUX" && -z "$FASTFETCH_SHOWN" ]]; then
   export FASTFETCH_SHOWN=1

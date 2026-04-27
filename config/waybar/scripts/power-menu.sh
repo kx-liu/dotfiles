@@ -6,6 +6,13 @@ notify() {
   notify-send "Waybar Power" "$1"
 }
 
+compact_error() {
+  local msg="${1//$'\n'/ }"
+  msg="${msg#"${msg%%[![:space:]]*}"}"
+  msg="${msg%"${msg##*[![:space:]]}"}"
+  printf '%s\n' "$msg"
+}
+
 select_action() {
   local choice
 
@@ -39,21 +46,29 @@ select_action() {
 
 run_windows_reboot() {
   local win_script="/usr/local/bin/reboot-to-windows"
+  local err=""
 
   [[ -x "$win_script" ]] || {
     notify "Windows reboot script not found: $win_script"
     return 1
   }
 
-  # GUI environment usually needs privilege escalation here.
   if command -v pkexec >/dev/null 2>&1; then
-    pkexec "$win_script"
-  elif command -v sudo >/dev/null 2>&1; then
-    sudo "$win_script"
-  else
-    notify "Need pkexec or sudo to reboot into Windows"
-    return 1
+    err="$(pkexec "$win_script" 2>&1)" && return 0
+    err="$(compact_error "$err")"
   fi
+
+  if command -v sudo >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
+    err="$(sudo -n "$win_script" 2>&1)" && return 0
+    err="$(compact_error "$err")"
+  fi
+
+  if [[ -z "$err" ]]; then
+    err="Windows reboot failed: authentication was cancelled or no non-interactive sudo path is available"
+  fi
+
+  notify "$err"
+  return 1
 }
 
 choice="$(select_action || true)"
