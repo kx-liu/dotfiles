@@ -53,6 +53,14 @@ json_escape() {
   printf '%s' "$value"
 }
 
+markup_escape() {
+  local value="$1"
+  value="${value//&/&amp;}"
+  value="${value//</&lt;}"
+  value="${value//>/&gt;}"
+  printf '%s' "$value"
+}
+
 emit() {
   local text="$1"
   local tooltip="$2"
@@ -126,8 +134,8 @@ elif (( now > prev_ts )); then
   printf '%s %s %s %s %s\n' "$now" "$rx" "$tx" "$rx_rate" "$tx_rate" > "$state_file"
 fi
 
-down_text="↓ $(format_rate "$rx_rate")"
-up_text="↑ $(format_rate "$tx_rate")"
+down_text="<span font_desc=\"Noto Sans 13\">↓</span> <span font_desc=\"Noto Sans Mono 12\">$(markup_escape "$(format_rate "$rx_rate")")</span>"
+up_text="<span font_desc=\"Noto Sans 13\">↑</span> <span font_desc=\"Noto Sans Mono 12\">$(markup_escape "$(format_rate "$tx_rate")")</span>"
 tooltip="${iface}\nDownload: $(format_rate "$rx_rate")\nUpload: $(format_rate "$tx_rate")"
 
 if [[ "$direction" == "down" ]]; then

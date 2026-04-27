@@ -98,7 +98,8 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": true
+    "tooltip": true,
+    "escape": false
   },
 
   "custom/net-up": {
@@ -106,7 +107,8 @@
     "return-type": "json",
     "interval": 1,
     "format": "{text}",
-    "tooltip": true
+    "tooltip": true,
+    "escape": false
   },
 
   "custom/cpu-temp": {
