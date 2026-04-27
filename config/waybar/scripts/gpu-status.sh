@@ -17,11 +17,11 @@ emit_nvidia() {
   line="$(
     nvidia-smi \
       --query-gpu=name,utilization.gpu,temperature.gpu,memory.used,memory.total \
-      --format=csv,noheader,nounits 2>/dev/null | head -n1
+      --format=csv,noheader,nounits 2>/dev/null | head -n1 || true
   )"
   [ -n "${line:-}" ] || return 1
   case "$line" in
-    Failed\ to*|No\ devices\ were\ found*)
+    Failed\ to*|No\ devices\ were\ found*|NVIDIA-SMI\ has\ failed*)
       return 1
       ;;
   esac

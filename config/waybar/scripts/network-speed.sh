@@ -34,13 +34,13 @@ active_iface() {
 format_rate() {
   awk -v bps="$1" 'BEGIN {
     if (bps < 1024) {
-      printf "%.0fB/s", bps
-    } else if (bps < 1024 * 1024) {
-      printf "%.0fK/s", bps / 1024
-    } else if (bps < 1024 * 1024 * 1024) {
-      printf "%.1fM/s", bps / 1024 / 1024
+      printf "%3.0fB/s", bps
+    } else if (bps < 1000 * 1024) {
+      printf "%3.0fK/s", bps / 1024
+    } else if (bps < 1000 * 1024 * 1024) {
+      printf "%3.0fM/s", bps / 1024 / 1024
     } else {
-      printf "%.1fG/s", bps / 1024 / 1024 / 1024
+      printf "%3.0fG/s", bps / 1024 / 1024 / 1024
     }
   }'
 }

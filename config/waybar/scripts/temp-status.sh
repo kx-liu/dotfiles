@@ -35,7 +35,7 @@ read_hwmon_temp_c() {
       case "$raw" in
         ''|*[!0-9]*) continue ;;
       esac
-      awk -v r="$raw" 'BEGIN { printf "%.1f", r/1000 }'
+      awk -v r="$raw" 'BEGIN { printf "%.0f", r/1000 }'
       return 0
     done
   done
@@ -75,12 +75,18 @@ emit_gpu() {
   line="$(
     nvidia-smi \
       --query-gpu=name,temperature.gpu \
-      --format=csv,noheader,nounits 2>/dev/null | head -n1
+      --format=csv,noheader,nounits 2>/dev/null | head -n1 || true
   )"
   if [ -z "${line:-}" ]; then
     emit_json "GPU  --" "NVIDIA GPU temperature unavailable" "temp-off"
     return 0
   fi
+  case "$line" in
+    Failed\ to*|No\ devices\ were\ found*|NVIDIA-SMI\ has\ failed*)
+      emit_json "GPU  --" "NVIDIA GPU temperature unavailable" "temp-off"
+      return 0
+      ;;
+  esac
 
   IFS=',' read -r name temp_c <<EOF
 $line

@@ -9,7 +9,7 @@ grep '^cpu' /proc/stat > "$tmp_file"
 
 if [ ! -s "$state_file" ]; then
   cp "$tmp_file" "$state_file"
-  echo '{"text":"CPU 0.0%","tooltip":"Collecting CPU usage...","class":"cpu"}'
+  echo '{"text":"CPU  0%","tooltip":"Collecting CPU usage...","class":"cpu"}'
   exit 0
 fi
 
@@ -45,19 +45,19 @@ FNR == NR {
 
 END {
   total = (("cpu" in usage) ? usage["cpu"] : 0)
-  tooltip = sprintf("Total: %.1f%%", total)
+  tooltip = sprintf("Total: %.0f%%", total)
 
   for (i = 1; i <= count; i++) {
     name = order[i]
     if (name == "cpu") continue
-    tooltip = tooltip sprintf("\n%s: %.1f%%", name, usage[name])
+    tooltip = tooltip sprintf("\n%s: %.0f%%", name, usage[name])
   }
 
   gsub(/\\/, "\\\\", tooltip)
   gsub(/"/, "\\\"", tooltip)
   gsub(/\n/, "\\n", tooltip)
 
-  printf("{\"text\":\"CPU %.1f%%\",\"tooltip\":\"%s\",\"class\":\"cpu\"}\n", total, tooltip)
+  printf("{\"text\":\"CPU %2.0f%%\",\"tooltip\":\"%s\",\"class\":\"cpu\"}\n", total, tooltip)
 }
 ' "$state_file" "$tmp_file"
 
