@@ -74,7 +74,7 @@ tooltip label {
 #custom-gpu,
 #custom-gpu-temp,
 #custom-cpu,
-#memory,
+#custom-memory,
 #custom-input-source,
 #custom-theme-toggle,
 #custom-power {
@@ -204,7 +204,7 @@ window#waybar.empty #window {
 
 #custom-cpu,
 #custom-gpu,
-#memory {
+#custom-memory {
   color: @sky;
 }
 
@@ -218,8 +218,18 @@ window#waybar.empty #window {
   min-width: 80px;
 }
 
-#memory {
+#custom-memory {
   min-width: 68px;
+}
+
+#custom-cpu,
+#custom-cpu-temp,
+#custom-gpu,
+#custom-gpu-temp,
+#custom-net-down,
+#custom-net-up,
+#custom-memory {
+  font-family: "Noto Sans Mono", "Symbols Nerd Font Mono", "Noto Sans CJK SC", monospace;
 }
 
 #group-connectivity {
@@ -229,7 +239,7 @@ window#waybar.empty #window {
 /* Emphasize group boundaries by spacing the first module of each group. */
 #custom-cpu,
 #custom-gpu,
-#memory,
+#custom-memory,
 #custom-theme-toggle {
   margin-left: 18px;
 }

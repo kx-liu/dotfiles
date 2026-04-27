@@ -54,7 +54,7 @@ EOF
     tooltip="${tooltip}"$'\n'"VRAM: ${mem_used}/${mem_total} MiB"
   fi
 
-  emit_json "GPU ${util}%" "$tooltip" "gpu"
+  emit_json "$(printf 'GPU %2s%%' "$util")" "$tooltip" "gpu"
   return 0
 }
 
@@ -62,4 +62,4 @@ if emit_nvidia; then
   exit 0
 fi
 
-emit_json "GPU --" "NVIDIA GPU data unavailable (nvidia-smi not found or no NVIDIA GPU visible)" "gpu-off"
+emit_json "GPU --%" "NVIDIA GPU data unavailable (nvidia-smi not found or no NVIDIA GPU visible)" "gpu-off"

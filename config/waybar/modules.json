@@ -141,9 +141,12 @@
     "tooltip": true
   },
 
-  "memory": {
-    "format": "RAM {percentage}%",
-    "interval": 1
+  "custom/memory": {
+    "exec": "~/.config/waybar/scripts/memory-status.sh",
+    "return-type": "json",
+    "interval": 1,
+    "format": "{text}",
+    "tooltip": true
   },
 
   "custom/input-source": {

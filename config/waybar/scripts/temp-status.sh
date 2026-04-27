@@ -53,7 +53,7 @@ emit_cpu() {
   fi
 
   if [ -z "$temp_c" ]; then
-    emit_json "CPU  --" "No supported CPU temperature sensor found" "temp-off"
+    emit_json "CPU --°C" "No supported CPU temperature sensor found" "temp-off"
     return 0
   fi
 
@@ -63,12 +63,12 @@ emit_cpu() {
     class="critical"
   fi
 
-  emit_json "CPU  ${temp_c}°C" "${source_name}: ${temp_c}°C" "$class"
+  emit_json "$(printf 'CPU %2s°C' "$temp_c")" "${source_name}: ${temp_c}°C" "$class"
 }
 
 emit_gpu() {
   if ! command -v nvidia-smi >/dev/null 2>&1; then
-    emit_json "GPU  --" "NVIDIA GPU temperature unavailable (nvidia-smi not found)" "temp-off"
+    emit_json "GPU --°C" "NVIDIA GPU temperature unavailable (nvidia-smi not found)" "temp-off"
     return 0
   fi
 
@@ -78,12 +78,12 @@ emit_gpu() {
       --format=csv,noheader,nounits 2>/dev/null | head -n1 || true
   )"
   if [ -z "${line:-}" ]; then
-    emit_json "GPU  --" "NVIDIA GPU temperature unavailable" "temp-off"
+    emit_json "GPU --°C" "NVIDIA GPU temperature unavailable" "temp-off"
     return 0
   fi
   case "$line" in
     Failed\ to*|No\ devices\ were\ found*|NVIDIA-SMI\ has\ failed*)
-      emit_json "GPU  --" "NVIDIA GPU temperature unavailable" "temp-off"
+      emit_json "GPU --°C" "NVIDIA GPU temperature unavailable" "temp-off"
       return 0
       ;;
   esac
@@ -101,7 +101,7 @@ EOF
   case "$temp_c" in ''|*[!0-9.]*) temp_c='--' ;; esac
 
   if [ "$temp_c" = "--" ]; then
-    emit_json "GPU  --" "NVIDIA: ${name}" "temp-off"
+    emit_json "GPU --°C" "NVIDIA: ${name}" "temp-off"
     return 0
   fi
 
@@ -111,7 +111,7 @@ EOF
     class="critical"
   fi
 
-  emit_json "GPU  ${temp_c}°C" "NVIDIA: ${name}\nTemp: ${temp_c}°C" "$class"
+  emit_json "$(printf 'GPU %2s°C' "$temp_c")" "NVIDIA: ${name}\nTemp: ${temp_c}°C" "$class"
 }
 
 case "$mode" in

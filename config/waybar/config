@@ -6,5 +6,5 @@
 
   "modules-left": ["hyprland/workspaces", "hyprland/submap", "hyprland/window"],
   "modules-center": ["clock"],
-  "modules-right": ["custom/spotify", "group/connectivity", "group/cpu", "group/gpu", "memory", "group/system"]
+  "modules-right": ["custom/spotify", "group/connectivity", "group/cpu", "group/gpu", "custom/memory", "group/system"]
 }
