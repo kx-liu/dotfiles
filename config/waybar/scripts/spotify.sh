@@ -8,6 +8,19 @@ notify() {
   notify-send "Waybar Spotify" "$1"
 }
 
+markup_escape() {
+  local value="$1"
+  value="${value//&/&amp;}"
+  value="${value//</&lt;}"
+  value="${value//>/&gt;}"
+  printf '%s' "$value"
+}
+
+tooltip_markup() {
+  local content="$1"
+  printf '<span font_desc="Noto Sans 10">%s</span>' "$(markup_escape "$content")"
+}
+
 launch_spotify() {
   if command -v spotify >/dev/null 2>&1; then
     nohup spotify >/dev/null 2>&1 &
@@ -54,7 +67,7 @@ status_json() {
 
   local status
   if ! status="$(playerctl --player=spotify status 2>/dev/null)"; then
-    emit_json "" "Spotify not running\nLeft click to launch" "spotify-offline"
+    emit_json "" "$(tooltip_markup "Spotify not running"$'\n'"Left click to launch")" "spotify-offline"
     return 0
   fi
 
@@ -85,10 +98,7 @@ status_json() {
     text=" ${state_icon} Spotify"
   fi
 
-  emit_json "$text" "Spotify: ${status}
-Left click: play/pause
-Middle click: next
-Right click: previous" "$class"
+  emit_json "$text" "$(tooltip_markup "Spotify: ${status}"$'\n'"Left click: play/pause"$'\n'"Middle click: next"$'\n'"Right click: previous")" "$class"
 }
 
 watch_loop() {

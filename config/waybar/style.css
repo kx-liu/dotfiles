@@ -4,7 +4,7 @@
 * {
   border: 0;
   font-family: "Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Noto Sans CJK JP", "Font Awesome 6 Free", "Symbols Nerd Font Mono", "Noto Color Emoji", sans-serif;
-  font-size: 12.5px;
+  font-size: 13px;
 }
 
 window#waybar {
@@ -27,6 +27,7 @@ tooltip * {
 
 tooltip label {
   font-family: "Noto Sans CJK SC", "Noto Sans CJK TC", "Noto Sans CJK JP", "Noto Sans", "Noto Color Emoji", sans-serif;
+  font-size: 12.5px;
   padding: 2px 4px;
 }
 
@@ -34,11 +35,11 @@ tooltip label {
   background: @base;
   border-radius: 10px;
   margin: 4px 0 4px 6px;
-  padding: 0 8px;
+  padding: 0 9px;
 }
 
 #workspaces button {
-  padding: 0 6px;
+  padding: 0 7px;
   margin: 2px 2px;
   border-radius: 999px;
   background: transparent;
@@ -78,7 +79,7 @@ tooltip label {
 #custom-input-source,
 #custom-theme-toggle,
 #custom-power {
-  padding: 3px 8px;
+  padding: 4px 9px;
   margin: 4px 0;
   border-radius: 10px;
   background: @base;
@@ -86,7 +87,7 @@ tooltip label {
 
 #window {
   margin: 4px 5px;
-  padding: 3px 10px;
+  padding: 4px 11px;
   border-radius: 10px;
   background: @mauve;
   color: @base;
@@ -144,12 +145,12 @@ window#waybar.empty #window {
 
 #custom-net-down {
   color: @sky;
-  min-width: 58px;
+  min-width: 60px;
 }
 
 #custom-net-up {
   color: @peach;
-  min-width: 58px;
+  min-width: 60px;
 }
 
 #network.disconnected,
@@ -173,9 +174,9 @@ window#waybar.empty #window {
 
 #custom-input-source {
   color: @peach;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
-  min-width: 32px;
+  min-width: 34px;
 }
 
 #custom-theme-toggle {
@@ -210,16 +211,16 @@ window#waybar.empty #window {
 
 #custom-cpu,
 #custom-gpu {
-  min-width: 52px;
+  min-width: 54px;
 }
 
 #custom-cpu-temp,
 #custom-gpu-temp {
-  min-width: 68px;
+  min-width: 70px;
 }
 
 #custom-memory {
-  min-width: 56px;
+  min-width: 58px;
 }
 
 #custom-cpu,
@@ -247,7 +248,7 @@ window#waybar.empty #window {
   background: rgba(238, 153, 160, 0.14);
   border: 1px solid rgba(238, 153, 160, 0.18);
   margin: 4px 12px 4px 0;
-  padding: 3px 10px;
+  padding: 4px 11px;
 }
 
 #custom-power:hover {

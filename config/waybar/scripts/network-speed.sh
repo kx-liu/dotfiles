@@ -71,6 +71,17 @@ emit() {
     "$class"
 }
 
+tooltip_markup() {
+  local iface="$1"
+  local down="$2"
+  local up="$3"
+
+  printf '<span font_desc="Noto Sans 10">%s\nDownload: %s\nUpload: %s</span>' \
+    "$(markup_escape "$iface")" \
+    "$(markup_escape "$down")" \
+    "$(markup_escape "$up")"
+}
+
 case "$direction" in
   down|up) ;;
   *) direction="down" ;;
@@ -136,7 +147,7 @@ fi
 
 down_text="<span font_family=\"Noto Sans\">↓</span> <span font_family=\"Noto Sans Mono\">$(markup_escape "$(format_rate "$rx_rate")")</span>"
 up_text="<span font_family=\"Noto Sans\">↑</span> <span font_family=\"Noto Sans Mono\">$(markup_escape "$(format_rate "$tx_rate")")</span>"
-tooltip="${iface}\nDownload: $(format_rate "$rx_rate")\nUpload: $(format_rate "$tx_rate")"
+tooltip="$(tooltip_markup "$iface" "$(format_rate "$rx_rate")" "$(format_rate "$tx_rate")")"
 
 if [[ "$direction" == "down" ]]; then
   emit "$down_text" "$tooltip" "net-down"
