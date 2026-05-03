@@ -3,7 +3,7 @@
 
 * {
   border: 0;
-  font-family: "JetBrainsMono Nerd Font", "Noto Sans CJK SC", "Font Awesome 6 Free", "Noto Color Emoji", sans-serif;
+  font-family: "Noto Sans CJK SC", "MesloLGS NF", "Font Awesome 6 Free", "Noto Color Emoji", sans-serif;
   font-size: 13px;
 }
 
@@ -228,7 +228,7 @@ window#waybar.empty #window {
 #custom-gpu,
 #custom-gpu-temp,
 #custom-memory {
-  font-family: "JetBrainsMono Nerd Font", "Noto Sans Mono CJK SC", monospace;
+  font-family: "Noto Sans Mono CJK SC", "MesloLGS NF", monospace;
 }
 
 #group-connectivity {
