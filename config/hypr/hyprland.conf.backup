@@ -109,33 +109,27 @@ bind = $mod SHIFT, 0, movetoworkspace, 10
 # Letters are global semantic home workspaces, not monitor-local names.
 # $mod+R jumps to R wherever it currently lives; it does NOT pull R to the current monitor.
 # Kept small on purpose: R/V/X/M/W/F/T are high-value anchors; numbers remain the flexible scratch space.
-bind = $mod, R, workspace, name:R
-bind = $mod, V, workspace, name:V
-bind = $mod, X, workspace, name:X
-bind = $mod, M, workspace, name:M
-bind = $mod, W, workspace, name:W
-bind = $mod, F, workspace, name:F
-bind = $mod, T, workspace, name:T
+bind = $mod, R, workspace, name:R # R for RStudio
+bind = $mod, V, workspace, name:V # V for VSCode
+bind = $mod, X, workspace, name:X # X for Firefox
+bind = $mod, S, workspace, name:S # S for Spotify
+bind = $mod, M, workspace, name:M # M for Mail
 
 # Move active window to semantic workspace and follow it.
 # If the target semantic workspace already exists on another monitor, the window moves there.
 bind = $mod SHIFT, R, movetoworkspace, name:R
 bind = $mod SHIFT, V, movetoworkspace, name:V
 bind = $mod SHIFT, X, movetoworkspace, name:X
+bind = $mod SHIFT, S, movetoworkspace, name:S
 bind = $mod SHIFT, M, movetoworkspace, name:M
-bind = $mod SHIFT, W, movetoworkspace, name:W
-bind = $mod SHIFT, F, movetoworkspace, name:F
-bind = $mod SHIFT, T, movetoworkspace, name:T
 
 # Optional escape hatch: explicitly pull semantic workspace to current monitor.
 # Normal use should be $mod+R/V/X..., not these.
 bind = $mod CTRL, R, focusworkspaceoncurrentmonitor, name:R
 bind = $mod CTRL, V, focusworkspaceoncurrentmonitor, name:V
 bind = $mod CTRL, X, focusworkspaceoncurrentmonitor, name:X
+bind = $mod CTRL, S, focusworkspaceoncurrentmonitor, name:S
 bind = $mod CTRL, M, focusworkspaceoncurrentmonitor, name:M
-bind = $mod CTRL, W, focusworkspaceoncurrentmonitor, name:W
-bind = $mod CTRL, F, focusworkspaceoncurrentmonitor, name:F
-bind = $mod CTRL, T, focusworkspaceoncurrentmonitor, name:T
 
 # Back-and-forth: previous workspace per monitor
 bind = $mod, TAB, workspace, previous_per_monitor
@@ -202,12 +196,10 @@ submap = resize
 # Semantic resize: make the active window bigger / smaller.
 # Use these first; they avoid the confusing right-window-gets-smaller issue of raw resizeactive.
 binde = , equal, layoutmsg, splitratio +0.05
-binde = SHIFT, equal, layoutmsg, splitratio +0.05
 binde = , minus, layoutmsg, splitratio -0.05
 
 # Fine semantic resize.
 binde = CTRL, equal, layoutmsg, splitratio +0.01
-binde = CTRL SHIFT, equal, layoutmsg, splitratio +0.01
 binde = CTRL, minus, layoutmsg, splitratio -0.01
 
 # Physical boundary resize with Vim HJKL.
@@ -306,7 +298,7 @@ windowrule = match:class ^org\\.keepassxc\\.KeePassXC$, workspace special:keepas
 windowrule = match:class ^org\\.keepassxc\\.KeePassXC$, no_initial_focus on
 windowrule = match:class ^org\\.keepassxc\\.KeePassXC$, float on
 windowrule = match:class ^org\\.keepassxc\\.KeePassXC$, center 1
-windowrule = match:class ^org\\.keepassxc\\.KeePassXC$, size 70% 70%
+windowrule = match:class ^org\\.keepassxc\\.KeePassXC$, size 80% 80%
 windowrule = match:class ^org\\.keepassxc\\.KeePassXC$, persistent_size on
 
 # Waybar session picker

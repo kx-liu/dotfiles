@@ -4,8 +4,16 @@
     "format": "{name}",
     "all-outputs": false,
     "active-only": false,
-    "move-to-monitor": true,
+    "move-to-monitor": false,
     "sort-by": "name"
+  },
+
+  "ext/workspaces": {
+    "format": "{name}",
+    "all-outputs": false,
+    "active-only": false,
+    "sort-by-name": true,
+    "on-click": "activate"
   },
 
   "hyprland/submap": {
