@@ -83,8 +83,7 @@ hl.bind(
 )
 
 -- ---------- Keybinds: KeePassXC scratchpad ----------
-hl.bind("ALT + K", hl.dsp.workspace.toggle_special("keepass"))
-hl.bind("ALT + SHIFT + K", hl.dsp.exec_cmd("keepassxc"))
+hl.bind("ALT + SHIFT + K", hl.dsp.workspace.toggle_special("keepass"))
 
 -- ---------- Keybinds: numeric workspaces ----------
 for i = 1, 10 do
@@ -129,15 +128,15 @@ hl.bind(mod .. " + J", hl.dsp.focus({ direction = "d" }))
 hl.bind(mod .. " + K", hl.dsp.focus({ direction = "u" }))
 hl.bind(mod .. " + L", hl.dsp.focus({ direction = "r" }))
 
-hl.bind(mod .. " + SHIFT + H", hl.dsp.window.move({ monitor = "l" }))
-hl.bind(mod .. " + SHIFT + J", hl.dsp.window.move({ monitor = "d" }))
-hl.bind(mod .. " + SHIFT + K", hl.dsp.window.move({ monitor = "u" }))
-hl.bind(mod .. " + SHIFT + L", hl.dsp.window.move({ monitor = "r" }))
+hl.bind(mod .. " + CTRL + H", hl.dsp.window.move({ monitor = "l" }))
+hl.bind(mod .. " + CTRL + J", hl.dsp.window.move({ monitor = "d" }))
+hl.bind(mod .. " + CTRL + K", hl.dsp.window.move({ monitor = "u" }))
+hl.bind(mod .. " + CTRL + L", hl.dsp.window.move({ monitor = "r" }))
 
-hl.bind(mod .. " + CTRL + H", hl.dsp.window.swap({ direction = "l" }))
-hl.bind(mod .. " + CTRL + J", hl.dsp.window.swap({ direction = "d" }))
-hl.bind(mod .. " + CTRL + K", hl.dsp.window.swap({ direction = "u" }))
-hl.bind(mod .. " + CTRL + L", hl.dsp.window.swap({ direction = "r" }))
+hl.bind(mod .. " + SHIFT + H", hl.dsp.window.swap({ direction = "l" }))
+hl.bind(mod .. " + SHIFT + J", hl.dsp.window.swap({ direction = "d" }))
+hl.bind(mod .. " + SHIFT + K", hl.dsp.window.swap({ direction = "u" }))
+hl.bind(mod .. " + SHIFT + L", hl.dsp.window.swap({ direction = "r" }))
 
 hl.bind(mod .. " + left", hl.dsp.focus({ monitor = "l" }))
 hl.bind(mod .. " + right", hl.dsp.focus({ monitor = "r" }))
@@ -277,70 +276,62 @@ hl.config({
 hl.animation({ leaf = "workspaces", enabled = true, speed = 4, bezier = "default", style = "fade" })
 hl.animation({ leaf = "windows", enabled = true, speed = 5, bezier = "default", style = "slide" })
 
--- ---------- Window rules: pin apps to semantic workspaces ----------
+-- ---------- Window rules: pin main app windows to semantic workspaces ----------
+-- Apps launched from rofi / terminal / app launcher will land on their semantic workspace.
+-- Modal dialogs / file pickers are excluded so they stay on the current workspace.
+
 hl.window_rule({
-  match = { class = "^(firefox|firefox-esr|org\\.mozilla\\.firefox)$" },
+  match = {
+    class = "^(firefox|firefox-esr|org\\.mozilla\\.firefox)$",
+    modal = false,
+    title = "negative:^(Open|Save|Select|Choose|Upload|File Upload|Open File|Open Folder|Save File|Select Folder|Choose File|Choose Files|打开|保存|选择).*$",
+  },
   workspace = "name:X silent",
 })
 
 hl.window_rule({
-  match = { class = "^(code|Code|code-oss|com\\.visualstudio\\.code)$" },
+  match = {
+    class = "^(code|Code|code-oss|com\\.visualstudio\\.code)$",
+    modal = false,
+    title = "negative:^(Open|Save|Select|Choose|Upload|Open File|Open Folder|Save File|Select Folder|Choose File|Choose Files|打开|保存|选择).*$",
+  },
   workspace = "name:V silent",
 })
 
 hl.window_rule({
-  match = { class = "^(rstudio|RStudio|com\\.rstudio\\.desktop)$" },
+  match = {
+    class = "^(rstudio|RStudio|com\\.rstudio\\.desktop)$",
+    modal = false,
+    title = "negative:^(Open|Save|Select|Choose|Upload|Open File|Open Folder|Save File|Select Folder|Choose File|Choose Files|打开|保存|选择).*$",
+  },
   workspace = "name:R silent",
 })
+
+
+-- ---------- KeePassXC: hidden special workspace / password drawer ----------
+
+hl.window_rule({
+  match = { class = "^org\\.keepassxc\\.KeePassXC$" },
+  workspace = "special:keepass silent",
+  no_initial_focus = true,
+  float = true,
+  center = true,
+  size = { "90%", "90%" },
+  persistent_size = true,
+})
+
+
+-- ---------- Global utility window rules ----------
 
 hl.window_rule({
   match = { class = "org.gnome.FileRoller" },
   float = true,
 })
 
--- KeePassXC: hidden special workspace / password drawer.
-hl.window_rule({
-  match = { class = "^org\\.keepassxc\\.KeePassXC$" },
-  workspace = "special:keepass silent",
-})
-
-hl.window_rule({
-  match = { class = "^org\\.keepassxc\\.KeePassXC$" },
-  no_initial_focus = true,
-})
-
-hl.window_rule({
-  match = { class = "^org\\.keepassxc\\.KeePassXC$" },
-  float = true,
-})
-
-hl.window_rule({
-  match = { class = "^org\\.keepassxc\\.KeePassXC$" },
-  center = true,
-})
-
-hl.window_rule({
-  match = { class = "^org\\.keepassxc\\.KeePassXC$" },
-  size = { "80%", "80%" },
-})
-
-hl.window_rule({
-  match = { class = "^org\\.keepassxc\\.KeePassXC$" },
-  persistent_size = true,
-})
-
 -- Waybar session picker
 hl.window_rule({
   match = { class = "^(yad|Yad)$", title = "^Waybar Session$" },
   float = true,
-})
-
-hl.window_rule({
-  match = { class = "^(yad|Yad)$", title = "^Waybar Session$" },
   center = true,
-})
-
-hl.window_rule({
-  match = { class = "^(yad|Yad)$", title = "^Waybar Session$" },
   size = { "36%", "34%" },
 })
